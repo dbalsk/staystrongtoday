@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 응원</title>
+  <script>
+    function fetchEncouragements() {
+        fetch('/encouragement')
+            .then(response => response.json())
+            .then(data => {
+                const encouragementContainer = document.getElementById("encouragements");
+                encouragementContainer.innerHTML = '';  // 초기화
+                data.forEach(message => {
+                    const p = document.createElement('p');
+                    p.textContent = message;
+                    encouragementContainer.appendChild(p);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+  </script>
+</head>
+<body>
+<h1>오늘의 응원</h1>
+<button onclick="fetchEncouragements()">응원 메시지 조회</button>
+<div id="encouragements"></div>
+</body>
+</html>
