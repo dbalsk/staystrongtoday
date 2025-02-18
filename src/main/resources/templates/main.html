@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--모바일 비율-->
+  <title>오늘도 힘내</title>
+  <!--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--> <!--axios 사용 시-->
+</head>
+<body>
+<h1>오늘도 힘내 (Stay Strong Today)</h1>
+<div>
+  <button id="encourageBtn">오늘의 응원</button>
+  <span id="encourageMessage" style="font-size: 24px; color: green;">응원메시지</span>
+</div>
+<script>
+  document.getElementById("encourageBtn").addEventListener("click", function() {
+      fetch("/encouragement/random") //클릭 시 해당 경로로
+          .then(response => response.json()) //서버에서 받아온 형식에 따라 json or text.
+          .then(data => {
+              document.getElementById("encourageMessage").innerText = data.encourageMessage; //json일 경우 data.message, text일 경우 data
+          })
+          .catch(error => console.log("Error encourage:", error)); //에러 발생.
+  });
+</script>
+</body>
+</html>
