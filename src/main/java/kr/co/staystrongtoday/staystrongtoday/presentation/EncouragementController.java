@@ -20,8 +20,15 @@ public class EncouragementController {
     @GetMapping("/random")
     public EncouragementDTO getEncouragementMessage() {
         //응원 메시지 반환 (모든 응원메시지 중 랜덤으로)
-        EncouragementDTO encouragementMessage = encouragementService.getEncouragementMessage();
-        System.out.println(encouragementMessage.getEncourageMessage());
-        return encouragementMessage;
+        EncouragementDTO encouragementDTO = encouragementService.getEncouragementMessage();
+        System.out.println(encouragementDTO.getEncourageMessage());
+        return encouragementDTO;
+    }
+
+    @PostMapping("/like/{id}")
+    public EncouragementDTO increaseLikeCount(@PathVariable Long id){
+        EncouragementDTO encouragementDTO = encouragementService.increaseLikeCount(id);
+        System.out.println(encouragementDTO.getLikeCount());
+        return encouragementDTO;
     }
 }

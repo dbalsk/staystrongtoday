@@ -5,6 +5,7 @@ import kr.co.staystrongtoday.staystrongtoday.infrastructure.EncouragementReposit
 import kr.co.staystrongtoday.staystrongtoday.presentation.EncouragementDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,5 +32,18 @@ public class EncouragementService {
         }else{
             return null;
         }*/
+    }
+
+    @Transactional
+    public EncouragementDTO increaseLikeCount(Long id) {
+        encouragementRepository.increaseLikeCount(id);
+
+        Optional<EncouragementEntity> optionalEncouragementEntity = encouragementRepository.findById(id);
+        if(optionalEncouragementEntity.isPresent()) {
+            EncouragementEntity encouragementEntity = optionalEncouragementEntity.get(); //엔티티로 변환
+            return EncouragementDTO.toDTO(encouragementEntity); //dto로 변환
+        }else{
+            return null;
+        }
     }
 }

@@ -41,7 +41,7 @@ public class EncouragementEntity {
             throw new RuntimeException("응원 메시지가 없습니다.");
         }*/
 
-        //멀티스레드 환경에서 랜덤으로 하나 반환
+        //랜덤으로 하나의 객체 반환 (ThreadLocalRandom -> 멀티스레드 환경)
         return encouragementEntityList.get(ThreadLocalRandom.current().nextInt(encouragementEntityList.size()));
     }
 }

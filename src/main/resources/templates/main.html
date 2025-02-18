@@ -11,15 +11,35 @@
 <div>
   <button id="encourageBtn">오늘의 응원</button>
   <span id="encourageMessage" style="font-size: 24px; color: green;">응원메시지</span>
+  <button id="likeBtn" style="display:none;">좋아요</button>
+  <span id="likeCount" style="font-size: 20px;"></span>
 </div>
 <script>
+  //응원메시지 출력 기능
   document.getElementById("encourageBtn").addEventListener("click", function() {
-      fetch("/encouragement/random") //클릭 시 해당 경로로
-          .then(response => response.json()) //서버에서 받아온 형식에 따라 json or text.
-          .then(data => {
-              document.getElementById("encourageMessage").innerText = data.encourageMessage; //json일 경우 data.message, text일 경우 data
-          })
-          .catch(error => console.log("Error encourage:", error)); //에러 발생.
+    fetch("/encouragement/random") //클릭 시 해당 경로로
+      .then(response => response.json()) //서버에서 받아온 형식에 따라 json or text.
+      .then(data => {
+        document.getElementById("encourageMessage").innerText = data.encourageMessage;
+        document.getElementById("likeBtn").style.display = "inline";
+        document.getElementById("likeCount").innerText = data.likeCount;
+
+        document.getElementById("likeBtn").setAttribute("data-id", data.id);
+        //html 요소(<button id="likeBtn">)에 위 응원메시지 객체의 id 저장.
+        //(해당 버튼에 "data-id"라는 속성을 추가하고 값을 저장한 것.)
+      })
+      .catch(error => console.log("Error encourage:", error)); //에러 발생.
+  });
+
+  //좋아요 증가 기능
+  document.getElementById("likeBtn").addEventListener("click", function() {
+    const id = this.getAttribute("data-id"); //저장해둔 id로 응원메시지 객체 가져오기 가능
+    fetch(`/encouragement/like/${id}`, { method: "POST" }) //템플릿 리터럴(${})을 사용할 경우 백틱을 써야됨
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("likeCount").innerText = data.likeCount;
+      })
+      .catch(error => console.log("Error like:", error));
   });
 </script>
 </body>
