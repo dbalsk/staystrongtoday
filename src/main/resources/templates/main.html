@@ -14,6 +14,7 @@
   <button id="likeBtn" style="display:none;">좋아요</button>
   <span id="likeCount" style="font-size: 20px;"></span>
 </div>
+<button onclick="saveReq()">응원메시지 작성!</button>
 <script>
   //응원메시지 출력 기능
   document.getElementById("encourageBtn").addEventListener("click", function() {
@@ -41,6 +42,11 @@
       })
       .catch(error => console.log("Error like:", error));
   });
+
+  const saveReq = () => {
+    location.href = "/encouragement/save"
+  }
+
 </script>
 </body>
 </html>
