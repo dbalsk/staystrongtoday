@@ -28,15 +28,10 @@ public class EncouragementController {
         return encouragementDTO;
     }
 
-    @PostMapping("/save")
-    public EncouragementDTO saveEncouragementMessage(@RequestParam String encourageMessage){
+    @PostMapping("")
+    public EncouragementDTO saveEncouragementMessage(@RequestBody EncouragementDTO encouragementDTO){
         //응원 메시지 저장
         //추후 작성자(회원정보)도 받아오는게 좋을듯.
-        //1. 응원 메시지 추가
-        //2. 메인페이지로 이동
-        //3. 본인의 응원메세지가 출력되어있도록.
-        EncouragementDTO encouragementDTO = new EncouragementDTO(encourageMessage); //책임의 분리를 위해 dto로 객체 생성
         return encouragementService.saveEncouragementMessage(encouragementDTO);
-
     }
 }

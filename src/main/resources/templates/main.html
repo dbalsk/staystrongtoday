@@ -5,26 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--모바일 비율-->
   <title>오늘도 힘내</title>
   <!--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--> <!--axios 사용 시-->
+  <script>
+    console.log("테스트 - 내부 스크립트 실행됨!"); // 내부 스크립트 테스트
+  </script>
 </head>
 <body>
 <h1>오늘도 힘내 (Stay Strong Today)</h1>
 <div>
   <button id="encourageBtn">오늘의 응원</button>
-  <span id="encourageMessage" style="font-size: 24px; color: green;">응원메시지</span>
+  <span id="encourageMessageOutput" style="font-size: 24px; color: green;">응원메시지</span>
   <button id="likeBtn" style="display:none;">좋아요</button>
   <span id="likeCount" style="font-size: 20px;"></span>
 </div>
 <button onclick="saveReq()">응원메시지 작성!</button>
 <script>
   //응원메시지 출력 기능
+  //fetch -> 요청 보내기
+  //.then -> 응답 처리
   document.getElementById("encourageBtn").addEventListener("click", function() {
-    fetch("/encouragement") //클릭 시 해당 경로로
-      .then(response => response.json()) //서버에서 받아온 형식에 따라 json or text.
-      .then(data => {
-        document.getElementById("encourageMessage").innerText = data.encourageMessage;
+    fetch("/encouragement") //요청을 해당 주소로
+      .then(response => response.json()) //응답을 json으로 파싱
+      .then(data => { //데이터 처리
+        document.getElementById("encourageMessageOutput").innerText = data.encourageMessage;
+
         document.getElementById("likeBtn").style.display = "inline"; //좋아요 증가 버튼이 보이도록
         document.getElementById("likeCount").innerText = data.likeCount; //좋아요 수 출력
-
         document.getElementById("likeBtn").setAttribute("data-id", data.id);
         //html 요소(<button id="likeBtn">)에 위 응원메시지 객체의 id 저장.
         //(해당 버튼에 "data-id"라는 속성을 추가하고 값을 저장한 것.)
@@ -38,6 +43,7 @@
     fetch(`/encouragement/${id}/like`, { method: "PATCH" }) //템플릿 리터럴(${})을 사용할 경우 백틱을 써야됨
       .then(response => response.json())
       .then(data => {
+        console.log("up!");
         document.getElementById("likeCount").innerText = data.likeCount;
       })
       .catch(error => console.log("Error like:", error));
@@ -46,7 +52,18 @@
   const saveReq = () => {
     location.href = "/encouragement/save"
   }
-
 </script>
 </body>
 </html>
+
+<!-- 세션에 데이터 저장
+  window.onload = function() {
+  const message = sessionStorage.getItem('encourageMessage');
+  if (message) {
+    // 세션에 저장된 메시지가 있으면 화면에 표시
+    document.getElementById("encourageMessageOutput").textContent = message;
+  } else {
+    // 세션에 저장된 메시지가 없으면 기본 문구 표시
+    document.getElementById("encourageMessageOutput").textContent = "응원 메시지";
+  }
+};-->
