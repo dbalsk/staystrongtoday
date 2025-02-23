@@ -36,10 +36,12 @@ public class EncouragementEntity {
     }
 
     public static EncouragementEntity getRamdomEncouragement(List<EncouragementEntity> encouragementEntityList) {
-        //응원메시지 리스트에서 랜덤으로 하나의 객체를 반환
-/*        if (encouragementEntityList.isEmpty()) {
+        //응원메시지 리스트에서 랜덤으로 하나의 객체를 반환 (도메인지식 외부로 유출되지않기위해 내부에서 구현)
+
+
+        if (encouragementEntityList.isEmpty()) {
             throw new RuntimeException("응원 메시지가 없습니다.");
-        }*/
+        }
 
         //랜덤으로 하나의 객체 반환 (ThreadLocalRandom -> 멀티스레드 환경)
         return encouragementEntityList.get(ThreadLocalRandom.current().nextInt(encouragementEntityList.size()));

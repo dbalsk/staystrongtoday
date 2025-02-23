@@ -18,12 +18,12 @@
 <script>
   //응원메시지 출력 기능
   document.getElementById("encourageBtn").addEventListener("click", function() {
-    fetch("/encouragement/random") //클릭 시 해당 경로로
+    fetch("/encouragement") //클릭 시 해당 경로로
       .then(response => response.json()) //서버에서 받아온 형식에 따라 json or text.
       .then(data => {
         document.getElementById("encourageMessage").innerText = data.encourageMessage;
-        document.getElementById("likeBtn").style.display = "inline";
-        document.getElementById("likeCount").innerText = data.likeCount;
+        document.getElementById("likeBtn").style.display = "inline"; //좋아요 증가 버튼이 보이도록
+        document.getElementById("likeCount").innerText = data.likeCount; //좋아요 수 출력
 
         document.getElementById("likeBtn").setAttribute("data-id", data.id);
         //html 요소(<button id="likeBtn">)에 위 응원메시지 객체의 id 저장.
@@ -35,7 +35,7 @@
   //좋아요 증가 기능
   document.getElementById("likeBtn").addEventListener("click", function() {
     const id = this.getAttribute("data-id"); //저장해둔 id로 응원메시지 객체 가져오기 가능
-    fetch(`/encouragement/like/${id}`, { method: "POST" }) //템플릿 리터럴(${})을 사용할 경우 백틱을 써야됨
+    fetch(`/encouragement/${id}/like`, { method: "PATCH" }) //템플릿 리터럴(${})을 사용할 경우 백틱을 써야됨
       .then(response => response.json())
       .then(data => {
         document.getElementById("likeCount").innerText = data.likeCount;
