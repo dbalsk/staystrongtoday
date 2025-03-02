@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller //뷰 렌더링 용 컨트롤러 (웹페이지 요청)
 @RequiredArgsConstructor
-@RequestMapping("/encouragement")
-public class EncouragementPageController {
+public class MainPageController {
     private final EncouragementService encouragementService;
 
-    @GetMapping("/save")
+    @GetMapping("/encouragement/save")
     public String saveEncouragementMessage(){
         return "save"; //save.html 파일로
     }
 
+    @GetMapping("/member/register")
+    public String registerMember(){
+        return "register"; //register.html 파일로
+    }
 }

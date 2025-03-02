@@ -17,7 +17,8 @@
   <button id="likeBtn" style="display:none;">좋아요</button>
   <span id="likeCount" style="font-size: 20px;"></span>
 </div>
-<button onclick="saveReq()">응원메시지 작성!</button>
+<button onclick="saveMsg()">응원메시지 작성!</button>
+<button onclick="saveMember()">회원가입</button>
 <script>
   //응원메시지 출력 기능
   //fetch -> 요청 보내기
@@ -49,8 +50,14 @@
       .catch(error => console.log("Error like:", error));
   });
 
-  const saveReq = () => {
+  //응원메시지 작성 페이지로
+  const saveMsg = () => {
     location.href = "/encouragement/save"
+  }
+
+  //회원가입 페이지로
+  const saveMember = () => {
+    location.href = "/member/register"
   }
 </script>
 </body>
