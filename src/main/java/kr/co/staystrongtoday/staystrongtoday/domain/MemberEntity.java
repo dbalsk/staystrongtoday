@@ -1,6 +1,7 @@
 package kr.co.staystrongtoday.staystrongtoday.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,8 @@ public class MemberEntity extends BaseEntity{
     //@Setter
     private Long id;
 
-    @Column(length = 5, nullable = false, unique = true) //null불가, 중복방지
+    @Column(nullable = false, unique = true) //null불가, 중복방지
+    @Size(min = 2, max = 10)
     @Getter
     private String memberName; // 사용자 이름 (로그인 ID로 사용)
 
@@ -23,7 +25,8 @@ public class MemberEntity extends BaseEntity{
     @Getter
     private String memberEmail; // 이메일
 
-    @Column(nullable = false) //암호화되어 해시 값이 저장되므로 길이 제한x
+    @Column(nullable = false)
+    @Size(min = 5, message = "비밀번호는 최소 5자리 이상이어야 합니다") //암호화되어 해시 값이 저장되므로 길이 최대 제한x
     //getter 금지
     private String memberPassword; // 비밀번호
 

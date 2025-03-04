@@ -1,6 +1,7 @@
 package kr.co.staystrongtoday.staystrongtoday.presentation;
 
 import jakarta.persistence.Column;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -24,7 +25,6 @@ public class MemberDTO {
     private String memberEmail; // 이메일
 
     @NotBlank(message = "비밀번호를 입력하세요")
-    @Size(min = 5, message = "비밀번호는 최소 5자리 이상이어야 합니다")
     @Getter //getter 금지
     private String memberPassword; // 비밀번호
 
@@ -40,7 +40,16 @@ public class MemberDTO {
                 memberEntity.getMemberName(),
                 memberEntity.getMemberEmail()
         );
-
         return memberDTO;
+    }
+
+    public static MemberEntity toEntity(MemberDTO memberDTO) {
+        //dto -> 엔티티
+        MemberEntity memberEntity = new MemberEntity(
+                memberDTO.getMemberName(),
+                memberDTO.getMemberEmail(),
+                memberDTO.getMemberPassword()
+        );
+        return memberEntity;
     }
 }

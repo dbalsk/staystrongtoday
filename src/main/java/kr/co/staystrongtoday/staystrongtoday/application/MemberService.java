@@ -17,20 +17,25 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final ValidationService validationService;
+
     @Transactional
-    public MemberDTO registerMember(@Valid MemberDTO memberDTO) {
-        //1.이메일 중복 체크 (해당 이메일로 조회하여 존재하는지 체크)
+    public MemberDTO registerMember(MemberDTO memberDTO) {
+        //1. 도메인 객체에 대한 유효성 검증
+        validationService.checkValid(MemberDTO.toEntity(memberDTO));
+
+        //2.이메일 중복 체크 (해당 이메일로 조회하여 존재하는지 체크)
         if (memberRepository.findByMemberEmail(memberDTO.getMemberEmail()).isPresent()) {
             throw new IllegalArgumentException("이미 가입된 이메일입니다");
         }
 
-        //2. 비밀번호 암호화
+        //3. 비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(memberDTO.getMemberPassword());
 
-        //3. 엔티티 객체 생성
+        //4. 엔티티 객체 생성
         MemberEntity memberEntity = new MemberEntity(memberDTO.getMemberName(), memberDTO.getMemberEmail(), encryptedPassword);
 
-        //4. DB에 저장
+        //5. DB에 저장
         MemberEntity saveEntity = memberRepository.save(memberEntity);
         return MemberDTO.toDTO(saveEntity);
     }

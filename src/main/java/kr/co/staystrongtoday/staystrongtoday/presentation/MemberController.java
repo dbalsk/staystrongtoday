@@ -31,7 +31,7 @@ public class MemberController {
             return ResponseEntity.ok("회원가입 성공!");
         }catch (IllegalArgumentException e){
             //회원가입 실패 시
-            return ResponseEntity.badRequest().body("회원가입 실패: " + e.getMessage());
+            return ResponseEntity.badRequest().body("회원가입 실패(컨트롤러): " + e.getMessage());
         }
     }
 }
