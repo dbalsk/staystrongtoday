@@ -20,4 +20,9 @@ public class MainPageController {
     public String registerMember(){
         return "register"; //register.html 파일로
     }
+
+    @GetMapping("/member/login")
+    public String loginMember(){
+        return "login"; //login.html 파일로
+    }
 }

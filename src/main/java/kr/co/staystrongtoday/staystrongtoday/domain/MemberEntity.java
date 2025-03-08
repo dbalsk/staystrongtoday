@@ -17,7 +17,7 @@ public class MemberEntity extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, unique = true) //null불가, 중복방지
-    @Size(min = 2, max = 10)
+    @Size(min = 2, max = 10, message = "아이디는 2~10자리이어야 합니다")
     @Getter
     private String memberName; // 사용자 이름 (로그인 ID로 사용)
 

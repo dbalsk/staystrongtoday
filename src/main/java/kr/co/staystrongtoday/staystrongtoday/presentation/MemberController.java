@@ -5,10 +5,7 @@ import kr.co.staystrongtoday.staystrongtoday.application.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,20 +15,20 @@ public class MemberController {
 
     @PostMapping("")
     //HTTP 응답의 상태코드를 설정하기 위해 ResponseEntity를 타입으로
-    public ResponseEntity<String> registerMember(@RequestBody @Valid MemberDTO memberDTO, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            //BindingResult로 유효성 검사에서 발생한 에러를 반환
-            return ResponseEntity.badRequest().body("잘못된 입력이 있습니다");
-        }
-
-        //유효성 검사 통과 후, 회원가입 처리
-        try{
-            //회원가입 성공 시
-            memberService.registerMember(memberDTO);
-            return ResponseEntity.ok("회원가입 성공!");
-        }catch (IllegalArgumentException e){
-            //회원가입 실패 시
-            return ResponseEntity.badRequest().body("회원가입 실패(컨트롤러): " + e.getMessage());
-        }
+    public ResponseEntity<String> registerMember(@RequestBody @Valid MemberDTO memberDTO){
+        //유효성 검사 통과 후, 회원가입
+        //2025.3.5 - 전역예외핸들러를 만들어 try-catch를 해제하고 간결한 코드로 정리
+        memberService.registerMember(memberDTO);
+        return ResponseEntity.ok("회원가입 성공!");
     }
+
+/*    @PostMapping("")
+    public MemberDTO loginMember(@RequestBody MemberDTO memberDTO){
+        //로그인
+        MemberDTO loginResult = memberService.loginMember(memberDTO);
+
+        //세션 설정해야될듯.
+
+        return loginResult;
+    }*/
 }

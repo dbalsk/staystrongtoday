@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     //단순 조회 메소드이기에 @Query 필요없이도 JPA가 알아서 처리
     Optional<MemberEntity> findByMemberEmail(String memberEmail); //이메일 중복체크
+    Optional<MemberEntity> findByMemberName(String memberName); //존재하는 회원이름인지 체크
 }

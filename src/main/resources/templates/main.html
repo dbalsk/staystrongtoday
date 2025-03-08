@@ -19,6 +19,7 @@
 </div>
 <button onclick="saveMsg()">응원메시지 작성!</button>
 <button onclick="saveMember()">회원가입</button>
+<button onclick="loginMember()">로그인</button>
 <script>
   //응원메시지 출력 기능
   //fetch -> 요청 보내기
@@ -58,6 +59,11 @@
   //회원가입 페이지로
   const saveMember = () => {
     location.href = "/member/register"
+  }
+
+  //로그인 페이지로
+  const loginMember = () => {
+    location.href = "/member/login"
   }
 </script>
 </body>

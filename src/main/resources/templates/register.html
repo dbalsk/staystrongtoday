@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>회원가입</h1>
-<form id="register">
-    <!-- -->
+<form id="register" novalidate>
+    <!-- 유효성 검사 테스트를 위해서 novalidate로 html 유효성 검사 제한-->
 
     <!-- 추후에 onblur="emailCheck()"로 이메일 체크 기능 구현-->
     <div>
@@ -62,7 +62,10 @@
         .then(data => {
             document.getElementById('responseMessage').innerHTML = data;
         })
-        .catch(error => console.error("회원가입 실패(html): ", error));
+        .catch(error => {
+            console.error("회원가입 실패(html): ", error);
+            document.getElementById('responseMessage').innerHTML = error;
+        });
     });
 </script>
 

@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -38,5 +40,11 @@ public class MemberService {
         //5. DB에 저장
         MemberEntity saveEntity = memberRepository.save(memberEntity);
         return MemberDTO.toDTO(saveEntity);
+    }
+
+    public MemberDTO loginMember(MemberDTO memberDTO){
+        Optional<MemberEntity> byMemberName =  memberRepository.findByMemberName(memberDTO.getMemberName());
+        //해당 이름의 회원의 비밀번호와 일치를 체크 (비밀번호 암호화 해제 필요할듯.)
+        return memberDTO;
     }
 }
