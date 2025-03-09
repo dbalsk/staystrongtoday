@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>회원가입</h1>
-<form id="register" novalidate>
+<form id="register">
     <!-- 유효성 검사 테스트를 위해서 novalidate로 html 유효성 검사 제한-->
 
     <!-- 추후에 onblur="emailCheck()"로 이메일 체크 기능 구현-->
@@ -55,7 +55,7 @@
         })
         .then(response => {
             if (!response.ok) {
-                return response.text().then(text => { throw new Error(text); }); //실패 시 catch로
+                return response.text().then(error => { throw error; }); //실패 시 catch로
             }
             return response.text(); //성공 시 정상 처리
         })
