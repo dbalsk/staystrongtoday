@@ -42,13 +42,18 @@
   //좋아요 증가 기능
   document.getElementById("likeBtn").addEventListener("click", function() {
     const id = this.getAttribute("data-id"); //저장해둔 id로 응원메시지 객체 가져오기 가능
-    fetch(`/encouragement/${id}/like`, { method: "PATCH" }) //템플릿 리터럴(${})을 사용할 경우 백틱을 써야됨
-      .then(response => response.json())
-      .then(data => {
-        console.log("up!");
-        document.getElementById("likeCount").innerText = data.likeCount;
-      })
-      .catch(error => console.log("Error like:", error));
+    fetch(`/encouragement/${id}/like`, {
+      method: "PATCH",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("token")  // JWT 포함
+      }
+    }) //템플릿 리터럴(${})을 사용할 경우 백틱을 써야됨
+    .then(response => response.json())
+    .then(data => {
+      console.log("up!");
+      document.getElementById("likeCount").innerText = data.likeCount;
+    })
+    .catch(error => console.log("Error like:", error));
   });
 
   //응원메시지 작성 페이지로

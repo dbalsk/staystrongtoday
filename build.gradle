@@ -34,6 +34,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5' // JJWT API
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5' // 실제 구현체 (없으면 동작 안 함)
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JSON 처리용 (Claims 파싱 시 필수)
 }
 
 tasks.named('test') {

@@ -15,6 +15,7 @@
         fetch("/encouragement", {
             method: "POST",
             headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),  // JWT 포함
                 "Content-Type": "application/json"
             }, //요청이 json 형식임을 서버에 알려줌.
             body: JSON.stringify({ encourageMessage: message }) //자바스크립트 객체를 json으로 직렬화

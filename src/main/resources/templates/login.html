@@ -5,6 +5,58 @@
   <title>login</title>
 </head>
 <body>
+<h1>로그인</h1>
+<form id="login">
+  <div>
+    <label for="memberName">아이디</label>
+    <input type="text" id="memberName" name="memberName" placeholder="아이디를 입력하세요" required />
+  </div>
+  <div>
+    <label for="memberPassword">비밀번호</label>
+    <input type="password" id="memberPassword" name="memberPassword" placeholder="비밀번호를 입력하세요" required />
+  </div>
+  <div>
+    <button type="submit">로그인</button>
+  </div>
+</form>
 
+<!-- 회원가입 성공 또는 실패 메시지 표시 -->
+<div id="responseMessage"></div>
+
+<script>
+    document.getElementById('login').addEventListener('submit', function(event) {
+        event.preventDefault(); // 기본 폼 제출 동작 막기
+
+        //폼 데이터 가져오기
+        const formData = {
+            memberName: document.getElementById('memberName').value,
+            memberPassword: document.getElementById('memberPassword').value,
+        };
+
+        fetch("/session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(error => { throw error; }); //실패 시 catch로
+            }
+            return response.json(); //성공 시 정상 처리
+        })
+        .then(data => {
+            alert("로그인 성공!");
+            sessionStorage.setItem("token", data.token);
+            window.location.href = "/";  //main 페이지로 리디렉션
+        })
+        .catch(error => {
+            alert("로그인 실패(html): " + error);
+            console.error("로그인 실패(html): ", error);
+            document.getElementById('responseMessage').innerHTML = error;
+        });
+    });
+</script>
 </body>
 </html>

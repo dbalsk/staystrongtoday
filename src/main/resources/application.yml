@@ -3,6 +3,9 @@
 server:
   port: 8081
 
+jwt:
+  secret: your-secret-key
+
 # database 연동 설정
 spring:
   datasource:

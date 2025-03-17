@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -28,9 +31,18 @@ public class MemberEntity extends BaseEntity{
     //getter 금지
     private String memberPassword; // 비밀번호
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
     public MemberEntity(String memberName, String memberEmail, String memberPassword) {
         this.memberName = memberName;
         this.memberEmail = memberEmail;
         this.memberPassword = memberPassword;
+    }
+
+    public boolean isPasswordMatch(String memberPassword, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(memberPassword, this.memberPassword);
+        //비밀번호(도메인지식)의 유출을 막기위해 엔티티 안에서 비교
     }
 }
