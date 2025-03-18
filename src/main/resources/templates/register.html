@@ -61,9 +61,10 @@
         })
         .then(data => {
             document.getElementById('responseMessage').innerHTML = data;
+            window.location.href = "/member/login";  //login 페이지로 리디렉션
         })
         .catch(error => {
-            console.error("회원가입 실패(html): ", error);
+            console.error("회원가입 실패: ", error);
             document.getElementById('responseMessage').innerHTML = error;
         });
     });

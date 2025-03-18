@@ -41,11 +41,18 @@
 
   //좋아요 증가 기능
   document.getElementById("likeBtn").addEventListener("click", function() {
+    const token = sessionStorage.getItem("token"); // 세션스토리지에서 JWT 가져오기
+    if (!token) {
+        alert("로그인이 필요합니다.");
+        window.location.href = "/member/login"; //login 페이지로 리디렉션
+        return;
+    }
+
     const id = this.getAttribute("data-id"); //저장해둔 id로 응원메시지 객체 가져오기 가능
     fetch(`/encouragement/${id}/like`, {
       method: "PATCH",
       headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("token")  // JWT 포함
+        "Authorization": "Bearer " + token // JWT 포함
       }
     }) //템플릿 리터럴(${})을 사용할 경우 백틱을 써야됨
     .then(response => response.json())

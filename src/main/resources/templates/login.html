@@ -52,8 +52,7 @@
             window.location.href = "/";  //main 페이지로 리디렉션
         })
         .catch(error => {
-            alert("로그인 실패(html): " + error);
-            console.error("로그인 실패(html): ", error);
+            alert("로그인 실패: " + error);
             document.getElementById('responseMessage').innerHTML = error;
         });
     });

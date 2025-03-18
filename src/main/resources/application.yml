@@ -3,8 +3,9 @@
 server:
   port: 8081
 
+#비밀키 (base64로 인코딩하여 설정파일에 저장)
 jwt:
-  secret: your-secret-key
+  secret: YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo0MTEyMjMzNA==
 
 # database 연동 설정
 spring:

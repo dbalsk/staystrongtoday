@@ -11,11 +11,18 @@
 
 <script>
     document.getElementById("submitButton").addEventListener("click", function(event) {
+        const token = sessionStorage.getItem("token");
+        if (!token) {
+            alert("로그인이 필요합니다.");
+            window.location.href = "/member/login"; //login 페이지로 리디렉션
+            return;
+        }
+
         const message = document.getElementById("encourageMessageInput").value;
         fetch("/encouragement", {
             method: "POST",
             headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),  // JWT 포함
+                "Authorization": "Bearer " + token,  // JWT 포함
                 "Content-Type": "application/json"
             }, //요청이 json 형식임을 서버에 알려줌.
             body: JSON.stringify({ encourageMessage: message }) //자바스크립트 객체를 json으로 직렬화
@@ -23,7 +30,7 @@
         .then(response => response.json())
         .then(data => {
             alert("응원 메시지 저장 완료");
-            //sessionStorage.setItem('encourageMessage', data.encourageMessage); //session 저장소를 사용하여 메인페이지로 이동했을 때 작성한 응원메시지가 바로 뜨도록 구현
+            //sessionStorage.setItem('encourageMessage', data.encourageMessage); //session 저장소를 사용하여 메인페이지로 이동했을 때 작성한 응원메시지가 바로 뜨도록 구현 -> 삭제
             window.location.href = "/";  //main 페이지로 리디렉션
         })
         .catch(error => console.error("Error:", error));

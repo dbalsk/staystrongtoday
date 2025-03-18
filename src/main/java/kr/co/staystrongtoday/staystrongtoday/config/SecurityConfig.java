@@ -40,7 +40,7 @@ public class SecurityConfig { //스프링 설정 클래스
                     //.requestMatchers("/admin/**").hasRole("ADMIN") // 관리자 페이지는 관리자만 허용
                     .anyRequest().authenticated() //나머지 요청은 인증 필요
             )
-            .formLogin(formLogin -> formLogin.disable()) //기본 로그인 창 비활성화 (추후 jwt 로그인 구현 예정)
+            .formLogin(formLogin -> formLogin.disable()) //기본 로그인 창 비활성화 (jwt 로그인으로 대체)
             .httpBasic(httpBasic -> httpBasic.disable()) //HTTP Basic 인증 비활성화
             .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);  // JWT 필터 추가
         return http.build();
